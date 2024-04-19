@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Middlewares\RoleMiddleware;
+use App\Http\Controllers\UserController;
 
 
 
@@ -20,59 +21,27 @@ use Spatie\Permission\Middlewares\RoleMiddleware;
 
 
 
+Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+Route::resource('roles', App\Http\Controllers\RoleController::class);
+
+Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
+Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
+
+Route::resource('users', App\Http\Controllers\UserController::class);
+
+#routes groupé de users
 
 
+// Route::prefix('/users')->name('users.')->controller(UserController::class)->group(function() {
+//     Route::get('/', 'index')->name('user.index');
+//     Route::get('/users', 'create')->name('user.create');
+//     Route::get('/users/{user}', 'show')->name('user.show');
+//     Route::put('/users/{user}', 'store')->name('user.store');
+//     Route::get('/users/{user}/edit', 'edit')->name('user.edit');
+//     Route::get('/users/{user}', 'update')->name('user.update');
+//     Route::delete('/users/{user}', 'destroy')->name('user.destroy');
 
-
-
-
-
-
-
-
-
-
-Route::group(['middleware' => 'auth'], function() {
-
-    Route::resource('permissions', App\Http\Controllers\PermissionController::class);
-    Route::resource('roles', App\Http\Controllers\RoleController::class);
-    
-    Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
-    Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
-    
-    Route::resource('users', App\Http\Controllers\UserController::class);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// });
 
 
 
