@@ -8,11 +8,15 @@
             <div>
                 <form action="{{ url('users/' . $user->id)}}" method="post">
                     @csrf
-                    @method('post')
+                    @method('PUT')
                     
                     <div class="mb-6">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
                         <input type="text" name="name" value="{{ $user->name }}">
+                        @error('name')
+                            <span>{{ $message }}</span>
+                        @enderror
+
                     </div>
 
                     <div class="mb-6">
@@ -23,6 +27,9 @@
                     <div class="mb-6">
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900">password</label>
                         <input type="password" name="password"  value="{{ $user->name }}">
+                        @error('password')
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-6">
@@ -36,6 +43,9 @@
                                 >{{ $role }}</option>
                             @endforeach
                         </select>
+                        @error('roles')
+                            <span>{{ $message }}</span>
+                        @enderror
                         
                     </div>
 

@@ -88,16 +88,44 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
         //
+        $request->validate([
+            'name' => 'required|string|min:3',
+            'password' => 'nullable|string|min:8|max:20',
+            'roles' => 'required',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
+
+        if (!empty($request->password)) {
+            $data += [
+                'password' => Hash::make($request->password),
+            ];
+        }
+
+        $user->update($data);
+
+        $user->syncRoles($request->roles);
+
+        return redirect('/users')->with('success', 'User updated successfully.');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user, Request $request)
     {
         //
+
+        $user->delete();
+
+        return redirect('/users')->with('success', 'User deleted successfully.');
+
     }
 }
