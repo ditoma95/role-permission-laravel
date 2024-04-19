@@ -2,7 +2,7 @@
     <div class="mt-20 ml-32">
         <div class="">
             <h3>Create Roles
-                <a  class="bg-blue-800 text-white p-2" href="{{ url('roles') }}">Retour</a>
+                <a  class="p-2 text-white bg-blue-800" href="{{ url('roles') }}">Retour</a>
             </h3>
 
             <div>
