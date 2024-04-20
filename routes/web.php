@@ -19,15 +19,16 @@ use App\Http\Controllers\UserController;
 */
 
 
-
-
-Route::resource('permissions', App\Http\Controllers\PermissionController::class);
-Route::resource('roles', App\Http\Controllers\RoleController::class);
-
-Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
-Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
-
-Route::resource('users', App\Http\Controllers\UserController::class);
+Route::group(['middleware' => ['role:super-admin']], function () {
+    //
+    
+    Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+    Route::resource('roles', App\Http\Controllers\RoleController::class);
+    
+    Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
+    Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']); 
+    Route::resource('users', App\Http\Controllers\UserController::class);
+});
 
 #routes groupé de users
 
